@@ -1,5 +1,5 @@
 <?php
-include 'dbt.php';
+include 'db.php';
 
 $stmt = $pdo->query("SELECT * FROM tasks");
 $tasks = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -122,7 +122,19 @@ $tasks = $stmt->fetchAll(PDO::FETCH_ASSOC);
       
         
         <h2 class="section-title">Not Completed</h2>
-
+        <div class="todo-list" id="todo-list">
+            <ul>
+                <?php foreach ($tasks as $task): ?>
+                    <li class="todo-item">
+                        <span class="text"><?php echo htmlspecialchars($task['task'] ?? ''); ?></span>
+                        <div>
+                            <a href="edit_task.php?id=<?php echo $task['id']; ?>">Edit</a>
+                            <a href="delete_task.php?id=<?php echo $task['id']; ?>" onclick="return confirm('Are you sure you want to delete this task?');">Delete</a>
+                        </div>
+                    </li>
+                <?php endforeach; ?>
+            </ul>
+        </div>
     </div>
 </body>
 </html>
